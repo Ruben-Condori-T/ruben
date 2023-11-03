@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Inventario Vendedor</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div class="header">
+            <div class="menu">
+                <div style="display:block">
+                    <div style="height: 12px"></div>
+                    <div class="options">
+                        <ul>
+                            <li><a href="/vendedor/inicio" class="header_opt">Inicio</a></li>
+                            <li><a href="/vendedor/inventario" class="header_opt">Revisión de Inventario</a></li>
+                            <li><a href="/vendedor/reporte" class="header_opt">Reporte Diario</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="/logout/vendedor"><button type="submit" class="btn btn-light btn-lg">Cerrar Sesión</button></a>
+            </div>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex;justify-content: center">
+            <h1 class="titulo">Revisión de Inventario</h1>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex">
+            <div style="flex:1"></div>
+            <div style="flex:4">
+                <div style="background-color: white; border: solid 2px black">
+                    <p class="parrafo">
+                        Puedes revisar la cantidad de unidades por producto que tienes.
+                    </p>
+                </div>
+                <div style="height: 30px"></div>
+                <div class="contiene_tabla" style="display:flex; justify-content: center; overflow:auto; height: 440px">
+                    <div style="width: 60%; margin: 0px 30px ; display:flex; justify-content: center;">
+                        <table class="table" style="align-items: center; justify-content: center;background-color: lightgray; border: solid black 3px">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre del producto</th>
+                                    <th scope="col">Cantidad disponible</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for prod in all_prods: %}
+                                <tr>
+                                    <td scope="row"><a href="/vendedor/inventario/{{ prod['id'] }}">{{ prod['nombre_prod']}}</a></td>
+                                    <td>{{ prod['cantidad_x_ven']}}</td>
+                                    <td>{{ prod['precio_prod']}}</td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style="flex:1"></div>
+        </div>
+    </div>
+</body>
+</html>

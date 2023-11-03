@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Bienvenido Vendedor</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div style="height:30px"></div>
+        <div style="display: flex;justify-content: center">
+            <h1 class="titulo">Bienvenido Vendedor</h1>
+        </div>
+        <div style="height:30px"></div>
+        <div class="mx-auto" style="display:flex;">
+            <div style="flex:1;"></div>
+            <div style="flex:5; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border: solid 3px black; border-radius: 10px;">
+                <h1 class="text-center m-3" style="color:rgb(0, 0, 0)">Registrarse</h1>                        
+                    {% with messages = get_flashed_messages(category_filter=["register_ven"]) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}            
+                                <p class="m-3">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                <form action="/register/vendedor" method="post" enctype="multipart/form-data" class="col-12 p-3">
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="first_name_ven">First Name:</label></div>
+                        <div style="display:block"><input type="text" style="width: 100%;" name="first_name_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="last_name_ven">Last Name:</label></div>
+                        <div style="display:block "><input type="text" style="width: 100%;" name="last_name_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="email_1_ven">Email:</label></div>
+                        <div style="display:block "><input type="email" style="width: 100%;" name="email_1_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="codigo_prov">Código del proveedor:</label><p>*Se le debió asignar un código de vendedor para que pueda registrar su tienda</p></div>
+                        <div style="display:block "><input type="text" style="width: 100%;" name="codigo_prov"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="lat_ven">Latitud:</label><p>*Colocar coordenadas de Google Maps</p></div>
+                        <div style="display:block "><input type="number" style="width: 100%;" name="lat_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="lng_ven">Longitud:</label><p>*Colocar coordenadas de Google Mapsr</p></div>
+                        <div style="display:block "><input type="number" style="width: 100%;" name="lng_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="perfil_ven">Foto de perfil:</label><p>*Subir foto de perfil</p></div>
+                        <div style="display:block "><input type="file" style="width: 100%;" name="perfil_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="password_1a_ven">Password:</label></div>
+                        <div style="display:block "><input type="password" style="width: 100%;" name="password_1a_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="password_1b_ven">Confirm Password:</label></div>
+                        <div style="display:block "><input type="password" style="width: 100%;" name="password_1b_ven"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "></div>
+                        <div style="display:block "><button type="submit" class="btn btn-primary">Registrarse como Vendedor</button></div>
+                    </div>
+                </form>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="flex:5">
+                <div style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); height: fit-content; border: solid 3px black; border-radius: 10px;">
+                    <h1 class="text-center m-3" style="color:rgb(0, 0, 0)">Iniciar Sesión</h1>
+                        {% with messages = get_flashed_messages(category_filter=["login_ven"]) %}     
+                            {% if messages %}                            
+                                {% for message in messages %}            
+                                    <p class="m-3">{{message}}</p>                   
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    <form action="/login/vendedor" method="post" class="col-12 p-3">
+                        <div style="justify-content:space-around">
+                            <div style="display:block "><label for="email_2_ven">Email:</label></div>
+                            <div style="display:block "><input type="email" style="width: 100%;" name="email_2_ven"></div>
+                        </div>
+                        <div style="height:20px" ></div>
+                        <div style="justify-content:space-around">
+                            <div style="display:block "><label for="password_2_ven">Password:</label></div>
+                            <div style="display:block "><input type="password" style="width: 100%;" name="password_2_ven"></div>
+                        </div>
+                        <div style="height:20px" ></div>
+                        <div style="justify-content:space-around">
+                            <div style="display:block "></div>
+                            <div style="display:block "><button type="submit" class="btn btn-primary">Iniciar Sesión como Vendedor</button></div>
+                        </div>
+                        <div style="height:20px" ></div>
+                    </form>
+                </div>
+                <div style="height:20px" ></div>
+                <div style="display: flex; justify-content: center;">
+                    <a href="/" style="display:block"><button type="submit" class="btn btn-light btn-lg">Regresar a Inicio</button></a>
+                </div>
+            </div>
+            <div style="flex:1;"></div>
+        </div>
+        <div style="height:30px"></div>
+    </div>
+</body>
+</html>

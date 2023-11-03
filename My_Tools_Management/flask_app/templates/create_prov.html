@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Crear producto</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div class="header">
+            <div class="menu">
+                <div style="display:block">
+                    <div style="height: 12px"></div>
+                    <div class="options">
+                        <ul>
+                            <li><a href="/proveedor/inicio" class="header_opt">Inicio</a></li>
+                            <li><a href="/proveedor/productos" class="header_opt">Productos</a></li>
+                            <li><a href="/proveedor/inventario" class="header_opt">Gestión de Inventario</a></li>
+                            <li><a href="/proveedor/ventas" class="header_opt">Reportes Diarios</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="/logout/proveedor"><button type="submit" class="btn btn-light btn-lg">Cerrar Sesión</button></a>
+            </div>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex;justify-content: center">
+            <h1 class="titulo">Creación de producto</h1>
+        </div>
+        <div style="height: 50px"></div>
+        <div class="mx-auto" style="display:flex;">
+            <div style="flex:4;"></div>
+            <div style="flex:8; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);border: solid black 3px; border-radius: 10px;">
+                <div style="display:flex; justify-content: center; align-items: center;">
+                    <h1 class="text-left m-3" style="color:rgb(0, 0, 0); display: inline;">Insertar los datos indicados</h1>
+                </div>                        
+                    {% with messages = get_flashed_messages(category_filter=["creating"]) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}            
+                                <p class="m-3">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                <form action="/add/producto" method="post" enctype="multipart/form-data" class="col-12 p-3">
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="new_precio">Precio:</label></div>
+                        <div style="display:block"><input type="number" style="width: 50%;" name="new_precio" min=0></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="new_nombre">Nombre:</label></div>
+                        <div style="display:block "><input type="text" style="width: 100%;" name="new_nombre"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="new_descripcion">Description:</label></div>
+                        <div style="display:block "><input style="min-height: 150px; width:100% " type="text" name="new_descripcion"></div>
+                    </div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "><label for="new_img_prod">Foto de Producto:</label><p>*Subir foto de perfil</p></div>
+                        <div style="display:block "><input type="file" style="width: 100%;" name="new_img_prod"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="justify-content:space-around">
+                        <div style="display:block "></div>
+                        <div style="display:block "><button type="submit" class="btn btn-primary">Crear el producto</button></div>
+                    </div>
+                </form>
+            </div>
+            <div style="flex:4;"></div>
+        </div>
+        <div style="height: 30px"></div>
+        <div style="height: 12px; display:flex; justify-content: space-around;">
+            <a href="/proveedor/productos"><button type="submit" class="btn btn-light btn-lg">Volver a productos</button></a>
+        </div>
+        <div style="height: 50px"></div>
+    </div>
+</body>
+</html>

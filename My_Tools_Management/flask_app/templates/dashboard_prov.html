@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Inicio Proveedor</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div class="header">
+            <div class="menu">
+                <div style="display:block">
+                    <div style="height: 12px"></div>
+                    <div class="options">
+                        <ul>
+                            <li><a href="/proveedor/inicio" class="header_opt">Inicio</a></li>
+                            <li><a href="/proveedor/productos" class="header_opt">Productos</a></li>
+                            <li><a href="/proveedor/inventario" class="header_opt">Gestión de Inventario</a></li>
+                            <li><a href="/proveedor/ventas" class="header_opt">Reportes Diarios</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="/logout/proveedor"><button type="submit" class="btn btn-light btn-lg">Cerrar Sesión</button></a>
+            </div>
+        </div>
+        <div class="grand">
+            <div class="perfil">
+                <div class="conf">
+                    <div class="gear">
+                        <img src="../static/img/gear.png" alt="gear icon">
+                    </div>
+                </div>
+                <div class="foto">
+                    <div class="my-user">
+                        <img src="{{ prov['img_prov'] }}" alt="my_user">
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="info_out"></div>
+                    <div class="info_in">
+                        <h3 class="info_esp">First Name: {{ prov['first_name_prov'] }}</h3>
+                        <h3 class="info_esp">Last Name: {{ prov['last_name_prov'] }}</h3>
+                        <h3 class="info_esp">Email: {{ prov['email_prov'] }}</h3>
+                        <h3 class="info_esp">Latitud: <p id="latitud">{{ prov['lat_prov'] }}</p></h3>
+                        <h3 class="info_esp">Longitud: <p id="longitud">{{ prov['lng_prov'] }}</p></h3>
+                        <h3 class="info_esp">Código de proveedor: {{ prov['codigo_prov'] }}</h3>
+                    </div>
+                    <div class="info_out"></div>
+                </div>
+                <div class="map">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
+            <div class="anuncios">
+                <div style="height:30px"></div>
+                <div style="display: flex;justify-content: center">
+                    <h1 class="subtitulo">Anuncios de los vendedores</h1>
+                </div>
+                <div class="anuncio">
+                    <div style="flex:1"></div>
+                    <div style="flex:5;display: flex; padding:15px 10px;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border: solid 3px black; border-radius: 10px; ; overflow:auto; max-height: 700px;">
+                        <div style="width: 100%">
+                            <h2>Solicitudes recibidas</h2>
+                            <p >Se mostrarán las solicitudes que ha recibido, en caso le haya llegado alguna</p>
+                            {% if sol %}
+                            <div style="height:30px" ></div>
+                            {% endif %}
+                            {% for sol in all_sols %}
+                                {% if sol['estado_sol'] == 0 %}
+                                        <br>
+                                        <h2>Solicitud</h2>
+                                        <p>Vendedor solicitante: {{sol['first_name_ven']}} {{sol['last_name_ven']}}</p>
+                                        <p >Fecha de solicitud: {{sol['created_at_sol']}}</p>
+                                        <p >Producto solicitado: {{sol['nombre_prod_sol']}} Cantidad: {{sol['cantidad_sol']}}</p>
+                                        <p >Razón de solicitud: {{sol['razon_sol']}}</p>
+                                        <div style="height:3px" ></div>
+                                        <div style="height: 12px; display:flex; justify-content: space-around;">
+                                            <a href="/aceptar/solicitud/{{sol['id_sol']}}"><button type="submit" class="btn btn-light btn-lg">Aceptar Solicitud</button></a>
+                                            <a href="/denegar/solicitud/{{sol['id_sol']}}"><button type="submit" class="btn btn-light btn-lg">Denegar Solicitud</button></a>
+                                        </div>
+                                        <div style="height:20px" ><p></p></div>
+                                {% endif %}                   
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div style="flex:1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "AIzaSyC29-1bjnoado_lii63WVOOPJd3z8Fjk5s", v:"beta"
+          // Add other bootstrap parameters as needed, using camel case.
+          // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
+        });
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        // Initialize and add the map
+        let latitud = parseFloat($("#latitud").text())
+        let longitud = parseFloat($("#longitud").text())
+        let map;
+
+        async function initMap() {
+        // The location of Uluru
+        const position = { lat: latitud, lng: longitud};
+        // Request needed libraries.
+        //@ts-ignore
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+        // The map, centered at Uluru
+        map = new Map(document.getElementById("map"), {
+            zoom: 17,
+            center: position,
+            mapId: "DEMO_MAP_ID",
+        });
+
+        // The marker, positioned at Uluru
+        const marker = new AdvancedMarkerView({
+            map: map,
+            position: position,
+            title: "Uluru",
+        });
+    }
+        initMap();
+
+    </script>
+</body>
+</html>

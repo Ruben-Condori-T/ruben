@@ -1,0 +1,123 @@
+*{
+   margin: 0px;
+   padding: 0px;
+}
+.Fondo{
+   background-image: url("../img/fondo_todo.png");
+   background-size: cover;
+   width: 100%;
+   min-height: 910px;
+}
+.titulo{
+   font-size: 450%;
+}
+.subtitulo{
+   font-size: 350%;
+}
+.parrafo{
+   font-size: 150%;
+   padding: 10px 30px;
+}
+.header{
+   align-items: center;
+   justify-content: center;
+   padding: 5px 10px;
+   background-color: black;
+   color:white
+}
+ul{
+   font-size: 120%;
+}
+li{
+   display:inline;
+   align-items: center;
+   padding: 0px 60px 0px 0px;
+}
+.options{
+   display:flex;
+   align-items: center;
+}
+.header_opt{
+   color:white;
+}
+.menu{
+   display:flex;
+   width: 90%;
+   margin: 0px auto;
+   justify-content: space-between;
+   align-items: center;
+}
+.grand{
+   display:flex;
+   width: 100%;
+}
+.perfil{
+   flex:1;
+   background-color: white;
+   border: solid black 3px;
+   min-height: 843px;
+   display:block;
+}
+.anuncios{
+   flex:3;
+}
+.anuncio{
+   display:flex;
+}
+.conf{
+   display: flex;
+   margin: 10px;
+   justify-content: end;
+}
+.foto{
+   display: flex;
+   margin: 10px;
+   justify-content: center;
+}
+.my-user{
+   top: 40px;
+   padding: 3px;
+   border-radius: 50%;
+   border:3px solid black;
+   background-color:white;
+}
+.my-product{
+   top: 40px;
+   padding: 3px;
+   border:3px solid black;
+   background-color:white;
+}
+img[alt="my_product"]{
+   height: 390px;
+   translate: 0px 0px;
+}
+img[alt="my_user"]{
+   height: 250px;
+   border-radius: 50%;
+   translate: 0px 0px;
+}
+img[alt="gear icon"]{
+   height: 40px;
+}
+.info{
+   display:flex;
+}
+.info_in{
+   flex: 6;
+}
+.info_out{
+   flex:1;
+}
+.info_esp{
+   font-size: 120%;
+   margin:20px 0px 5px 0px;
+}
+.map{
+   margin:20px;
+   display: flex;
+   justify-content: center;
+}
+#map {
+   height: 400px; /* The height is 400 pixels */
+   width: 100%; /* The width is the width of the web page */
+}

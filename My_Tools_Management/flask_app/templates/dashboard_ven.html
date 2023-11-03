@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Inicio Vendedor</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div class="header">
+            <div class="menu">
+                <div style="display:block">
+                    <div style="height: 12px"></div>
+                    <div class="options">
+                        <ul>
+                            <li><a href="/vendedor/inicio" class="header_opt">Inicio</a></li>
+                            <li><a href="/vendedor/inventario" class="header_opt">Revisión de Inventario</a></li>
+                            <li><a href="/vendedor/reporte" class="header_opt">Reporte Diario</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="/logout/vendedor"><button type="submit" class="btn btn-light btn-lg">Cerrar Sesión</button></a>
+            </div>
+        </div>
+        <div class="grand">
+            <div class="perfil">
+                <div class="conf">
+                    <div class="gear">
+                        <img src="../static/img/gear.png" alt="gear icon">
+                    </div>
+                </div>
+                <div class="foto">
+                    <div class="my-user">
+                        <img src="{{ ven['img_ven'] }}" alt="my_user">
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="info_out"></div>
+                    <div class="info_in">
+                        <h3 class="info_esp">First Name: {{ ven['first_name_ven'] }}</h3>
+                        <h3 class="info_esp">Last Name: {{ ven['last_name_ven'] }}</h3>
+                        <h3 class="info_esp">Email: {{ ven['email_ven'] }}</h3>
+                        <h3 class="info_esp">Proveedor: {{ prov['first_name_prov'] }} {{ prov['last_name_prov'] }}</h3>
+                        <h3 class="info_esp">Latitud: <p id="latitud">{{ ven['lat_ven'] }}</p></h3>
+                        <h3 class="info_esp">Longitud: <p id="longitud">{{ ven['lng_ven'] }}</p></h3>
+                    </div>
+                    <div class="info_out"></div>
+                </div>
+                <div class="map">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
+            <div class="anuncios">
+                <div style="height:30px"></div>
+                <div style="display: flex;justify-content: center">
+                    <h1 class="subtitulo">Solicitudes</h1>
+                </div>
+                <div class="anuncio">
+                    <div style="flex:1"></div>
+                    <div style="flex:5;display: flex; padding:15px 10px;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border: solid 3px black; border-radius: 10px; ; overflow:auto; height: 250px">
+                        <div style="width: 100%">
+                            <h2>Realizar una solicitud</h2>
+                            {% with messages = get_flashed_messages(category_filter=["soliciting"]) %}     
+                                {% if messages %}                            
+                                    {% for message in messages %}            
+                                        <p class="m-3">{{message}}</p>                   
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            <form action="/solicitar/producto/{{ session['user_id'] }}" method="post" enctype="multipart/form-data" class="col-12 p-3">
+                                <div style="display:flex; justify-content: center">
+                                    <div style="justify-content:space-around">
+                                        <div style="display:block "><label for="cantidad_sol">Cantidad:</label></div>
+                                        <div style="height:5px" ></div>
+                                        <div style="display:block"><input type="number" style="width: 50%;" name="cantidad_sol" min=0></div>
+                                    </div>
+                                    <div style="height:20px" ></div>
+                                    <div style="justify-content:space-around">
+                                        <p>Producto a solicitar:</p>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="id_prod_sol">
+                                            {% for prod in all_prods %}
+                                                <option value="{{prod['id']}}">{{prod['nombre_prod']}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="height:20px" ></div>
+                                <div style="justify-content:space-around">
+                                    <div style="display:block "><label for="razon_sol">Razón de solicitud:</label></div>
+                                    <div style="display:block "><input style="min-height: 50px; width:100% " type="text" name="razon_sol"></div>
+                                </div>
+                                <div style="height:20px" ></div>
+                                <div style="justify-content:space-around">
+                                    <div style="display:block "></div>
+                                    <div style="display:block "><button type="submit" class="btn btn-primary">Realizar la solicitud</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex:1"></div>
+                    </div>
+                    <div style="height:20px" ></div>
+                    <div style="display:flex">
+                        <div style="flex:1"></div>
+                        <div style="flex:5;display: flex; padding:15px 10px;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border: solid 3px black; border-radius: 10px; ; overflow:auto; max-height: 700px">
+                            <div style="width: 100%">
+                                <h2>Solicitudes enviadas</h2>
+                                <p >Las solicitudes pendientes se muestran en su totalidad, en cambio las aceptadas o rechazadas se visualizarán hasta máximo 2 días despues de ser respondidos</p>
+                                {% if all_sols %}
+                                    <div style="height:20px" ></div>
+                                    {% for sol in all_sols %}
+                                        {% if sol['estado_sol'] == 0 %}
+                                            <p >Fecha de solicitud: {{sol['created_at_sol']}} // Producto solicitado: {{sol['nombre_prod_sol']}} // Cantidad: {{sol['cantidad_sol']}}</p>
+                                            <p >Razón de solicitud: {{sol['razon_sol']}}</p>
+                                            <p style="font-weight: 800;">Todavía está pendiente de revisión</p>
+                                            <div style="height:20px" ></div>
+                                        {% elif sol['estado_sol'] == 1 %}
+                                            {% if sol['tiempo_sol'] == 0 %}
+                                                <p >Fecha de solicitud: {{sol['created_at_sol']}} // Producto solicitado: {{sol['nombre_prod_sol']}} // Cantidad: {{sol['cantidad_sol']}}</p>
+                                                <p >Razón de solicitud: {{sol['razon_sol']}}</p>
+                                                <p style="color:rgb(0, 183, 0); font-weight: 800;">Su solicitud ha sido aceptada, se ha actualizado en su inventario</p>
+                                            {% endif %} 
+                                        {% elif sol['estado_sol'] == 2 %}
+                                            {% if sol['tiempo_sol'] == 0 %}
+                                                <p >Fecha de solicitud: {{sol['created_at_sol']}} // Producto solicitado: {{sol['nombre_prod_sol']}} // Cantidad: {{sol['cantidad_sol']}}</p>
+                                                <p >Razón de solicitud: {{sol['razon_sol']}}</p>
+                                                <p style="color:rgb(207, 0, 0); font-weight: 800;">Su solicitud ha sido rechazada, cualquier información conversar con el proveedor</p>
+                                            {% endif %}
+                                        {% endif %}                   
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div style="flex:1"></div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "AIzaSyC29-1bjnoado_lii63WVOOPJd3z8Fjk5s", v:"beta"
+          // Add other bootstrap parameters as needed, using camel case.
+          // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
+        });
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        // Initialize and add the map
+        let latitud = parseFloat($("#latitud").text())
+        let longitud = parseFloat($("#longitud").text())
+        let map;
+
+        async function initMap() {
+        // The location of Uluru
+        const position = { lat: latitud, lng: longitud};
+        // Request needed libraries.
+        //@ts-ignore
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+        // The map, centered at Uluru
+        map = new Map(document.getElementById("map"), {
+            zoom: 17,
+            center: position,
+            mapId: "DEMO_MAP_ID",
+        });
+
+        // The marker, positioned at Uluru
+        const marker = new AdvancedMarkerView({
+            map: map,
+            position: position,
+            title: "Uluru",
+        });
+    }
+        initMap();
+
+    </script>
+</body>
+</html>

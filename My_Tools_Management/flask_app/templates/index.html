@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Bienvenido a Tools' Management</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div style="height: 50px"></div>
+        <div style="display: flex;justify-content: center">
+            <h1 class="titulo">TOOLS' MANAGEMENT</h1>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex">
+            <div style="flex:1"></div>
+            <div style="flex:4; background-color: white; border: solid 2px black">
+                <p class="parrafo">
+                    Bienvenido a Tools' Management. Esta es una herramienta de logística para el monitoreo de
+                    inventario para microempresas en el mundo de compra y venta de productos de ferretería.
+                    Como proveedor, puedes monitorear el balance de productos vendidos en las diferentes sucursales,
+                    mientras que como vendedor administrarás tu stock local de una manera más eficiente.
+                </p>
+            </div>
+            <div style="flex:1"></div>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex; justify-content: center;">
+            <a href="/prov" style="display:block"><button type="submit" class="btn btn-light btn-lg">Ingresar como Proveedor</button></a>
+        </div>
+        <div style="height: 50px"></div>
+        <div style="display: flex; justify-content: center;">
+            <a href="/ven" style="display:block"><button type="submit" class="btn btn-light btn-lg">Ingresar como Vendedor</button></a>
+        </div>
+    </div>
+</body>
+</html>

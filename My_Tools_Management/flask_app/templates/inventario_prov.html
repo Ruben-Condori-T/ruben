@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Productos Proveedor</title>
+</head>
+<body>
+    <div class="Fondo">
+        <div class="header">
+            <div class="menu">
+                <div style="display:block">
+                    <div style="height: 12px"></div>
+                    <div class="options">
+                        <ul>
+                            <li><a href="/proveedor/inicio" class="header_opt">Inicio</a></li>
+                            <li><a href="/proveedor/productos" class="header_opt">Productos</a></li>
+                            <li><a href="/proveedor/inventario" class="header_opt">Gestión de Inventario</a></li>
+                            <li><a href="/proveedor/ventas" class="header_opt">Reportes Diarios</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="/logout/proveedor"><button type="submit" class="btn btn-light btn-lg">Cerrar Sesión</button></a>
+            </div>
+        </div>
+        <div style="height: 50px"></div>
+        <form action="/proveedor/inventario/actualizar/prov/{{ session['user_id']}}" method="post" class="col-12 p-3">
+            <div style="display: flex;justify-content: center">
+                <h1 class="titulo">Gestión de inventario</h1>
+            </div>
+            <div style="height: 30px"></div>
+            <div style="display: flex">
+                <div style="flex:1"></div>
+                <div style="flex:4">
+                    <div>
+                        <h2>Gestión de Inventario Total</h2>
+                    </div>
+                    {% with messages = get_flashed_messages(category_filter=["actualizar_prov"]) %}     
+                            {% if messages %}                            
+                                {% for message in messages %}            
+                                    <p class="m-3">{{message}}</p>                   
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    <div style="height: 15px"></div>
+                    <div class="contiene_tabla" style="display:flex; justify-content: center; overflow:auto; height: 440px">
+                        <div style="width: 90%; margin: 0px 30px ; display:flex; justify-content: center;">
+                            <table class="table" id="myTable" style="align-items: center; justify-content: center;background-color: lightgray; border: solid black 3px">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre del producto</th>
+                                        <th scope="col">Q Total</th>
+                                        <th scope="col">Q en Vendedores</th>
+                                        <th scope="col">Entradas</th>
+                                        <th scope="col">Merma</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prod in all_prods %}
+                                    <tr>
+                                        <td scope="row">{{ prod['nombre_prod']}}</td>
+                                        <td>{{ prod['cantidad_x_prov']}}</td>
+                                        <td>{{ prod['cantidad_en_ven']}}</td>
+                                        <td><input type="number" style="width: 100px;" name="entrada_{{ prod['id'] }}" value=0 min=0></td>
+                                        <td><input type="number" style="width: 100px;" name="merma_{{ prod['id'] }}" value=0 min=0></td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex:1"></div>
+            </div>
+            <div style="height: 30px"></div>
+            <div style="display: flex; justify-content: center;">
+                <button id="est" class="btn btn-light btn-lg" onclick="fnExcelReport()">Export HTML Table</button>
+                <div style="width: 50px"></div>
+                <button type="submit" class="btn btn-light btn-lg">Actualizar el Inventario Total</button>
+            </div>
+            <div style="height: 30px"></div>
+            <div style="display: flex">
+                <div style="flex:1"></div>
+                <div style="flex:4">
+                    <div>
+                        <h2>Gestión de Inventario Según Vendedor</h2>
+                    </div>
+                    <div style="height: 30px"></div>
+                    <div class="contiene_tabla" style="display:flex; justify-content: center; overflow:auto; height: 440px">
+                        <div style="width: 90%; margin: 0px 30px ; display:flex; justify-content: center;">
+                            <table class="table" style="align-items: center; justify-content: center;background-color: lightgray; border: solid black 3px">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre del Vendedor</th>
+                                        <th scope="col">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%for ven in all_vens %}
+                                    <tr>
+                                        <td scope="row"><a href="/proveedor/inventario/{{ ven['id_ven'] }}">{{ ven['first_name_ven']}} {{ ven['last_name_ven']}}</a></td>
+                                        <td>{{ ven['email_ven']}}</td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex:1"></div>
+            </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- <script src="{{ url_for('static',filename='js/prog.js') }}"></script> -->
+    <script src="prog.js"></script>
+</body>
+</html>
